@@ -103,10 +103,6 @@ class MLP_AUX(object):
     def train_model(self):
 
         users, cusers, items, targets, sims = self._generate_train_data()
-        print(sum(users))
-        print(sum(items))
-        print(sum(targets))
-
         cuser_inputs = Input(shape=(1,))
         user_inputs = Input(shape=(1,))
         item_inputs = Input(shape=(1,))

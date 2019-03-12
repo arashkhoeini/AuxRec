@@ -2,6 +2,7 @@ import argparse
 from mlp import MLP
 from mlp_aux import MLP_AUX
 from parallel import Parallel
+from parallel_aux import Parallel_AUX
 from dataset import Dataset
 from evaluate import evaluate_model
 
@@ -65,6 +66,13 @@ if __name__ == "__main__":
         print("Hitrate: {}".format(sum(hits) / len(hits)))
         print("NDCG: {}".format(sum(ndcgs) / len(ndcgs)))
     elif args.network_type == 'parallel-aux':
-        pass
+        dataset = Dataset(dataset_name = args.dataset)
+        parallel_aux = Parallel_AUX(dataset, args.negative_sampling_size, eval(args.layers), 
+                    args.epochs, args.batch_size, args.validation_split,
+                    args.user_sampling_size, args.core_number, args.sim_threshold)
+        model = parallel_aux.train_model()
+        hits, ndcgs = evaluate_model(model, dataset.test_data, dataset.test_negatives, 10, 1, True)
+        print("Hitrate: {}".format(sum(hits) / len(hits)))
+        print("NDCG: {}".format(sum(ndcgs) / len(ndcgs)))
     else: 
         print('ERROR: No such network.')

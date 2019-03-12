@@ -52,8 +52,8 @@ class Parallel(object):
         user_inputs = Input(shape=(1,))
         item_inputs = Input(shape=(1,))
 
-        item_embbedings  =  Embedding(self.dataset.item_size, self.layers[0]//2 , input_length=1)(item_inputs)
-        user_embbedings  =  Embedding(self.dataset.user_size, self.layers[0]//2 , input_length=1)(user_inputs)
+        item_embbedings  =  Embedding(self.dataset.item_size, self.layers[0], input_length=1)(item_inputs)
+        user_embbedings  =  Embedding(self.dataset.user_size, self.layers[0] , input_length=1)(user_inputs)
 
         user_emb_flat = Flatten()(user_embbedings)
         item_emb_flat = Flatten()(item_embbedings)
