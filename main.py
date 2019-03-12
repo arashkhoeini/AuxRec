@@ -1,6 +1,7 @@
 import argparse
 from mlp import MLP
 from mlp_aux import MLP_AUX
+from parallel import Parallel
 from dataset import Dataset
 from evaluate import evaluate_model
 
@@ -55,7 +56,14 @@ if __name__ == "__main__":
         print("Hitrate: {}".format(sum(hits) / len(hits)))
         print("NDCG: {}".format(sum(ndcgs) / len(ndcgs)))
     elif args.network_type == 'parallel':
-        pass
+
+        dataset = Dataset(dataset_name=args.dataset)
+        parallel = Parallel(dataset, args.negative_sampling_size, eval(args.layers), 
+            args.epochs, args.batch_size, args.validation_split)
+        model = parallel.train_model()
+        hits, ndcgs = evaluate_model(model, dataset.test_data, dataset.test_negatives, 10, 1)
+        print("Hitrate: {}".format(sum(hits) / len(hits)))
+        print("NDCG: {}".format(sum(ndcgs) / len(ndcgs)))
     elif args.network_type == 'parallel-aux':
         pass
     else: 

@@ -49,9 +49,6 @@ class MLP(object):
     def train_model(self):
 
         users, items, targets = self._generate_train_data()
-        print(sum(users))
-        print(sum(items))
-        print(sum(targets))
         user_inputs = Input(shape=(1,))
         item_inputs = Input(shape=(1,))
 
